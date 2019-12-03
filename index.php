@@ -50,8 +50,16 @@
 </nav>
 -->
 <!--Input query and display result-->
-<div class="container-fluid">
-<h1><center>Online Bookstore</h1>
+<div class="container-fluid p-3 bg-dark">
+    <h1>
+        <center>
+            <p class = "text-white">
+                Online Bookstore
+            </p>
+        </center>
+    </h1>
+</div>
+  <div class = "containter-fluid p-5">
 	<form method="post">
 			<div class="form-group">
 				<label for="input">Input Query:</label>
@@ -129,6 +137,7 @@
             <div class="alert alert-success alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong><center><?php echo "Number of rows displayed: ", $count?></center></strong> 
+            </div>
     <?php
             }
       }
@@ -137,17 +146,16 @@
 </div>
     
 <div class="container">
-  <h2>Bookstore Tables</h2>
-
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Book                                               .</a></li>
-    <li><a data-toggle="tab" href="#menu1">Customer                                                 .</a></li>
-    <li><a data-toggle="tab" href="#menu2">Employee                                                 .</a></li>
-    <li><a data-toggle="tab" href="#menu3">Orders                                                   .</a></li>
-    <li><a data-toggle="tab" href="#menu4">Order Details                                            .</a></li>
-    <li><a data-toggle="tab" href="#menu5">Shipper                                                  .</a></li>
-    <li><a data-toggle="tab" href="#menu6">Supplier                                                 .</a></li>
-    <li><a data-toggle="tab" href="#menu7">Subject                                                  .</a></li>
+    <h2><center>Tables</center></h2>
+  <ul class="nav nav-tabs justify-content-center">
+      <li class="active"><a data-toggle="tab" href="#home"><p style = "padding-right: 15px;">Book </p></a></li>
+      <li><a data-toggle="tab" href="#menu1"><p style = "padding-right: 15px;">Customer</p></a></li>
+      <li><a data-toggle="tab" href="#menu2"><p style = "padding-right: 15px;">Employee</p></a></li>
+      <li><a data-toggle="tab" href="#menu3"><p style = "padding-right: 15px;">Orders</p></a></li>
+      <li><a data-toggle="tab" href="#menu4"><p style = "padding-right: 15px;">Order Details</p></a></li>
+      <li><a data-toggle="tab" href="#menu5"><p style = "padding-right: 15px;">Shipper</p></a></li>
+      <li><a data-toggle="tab" href="#menu6"><p style = "padding-right: 15px;">Supplier</p></a></li>
+      <li><a data-toggle="tab" href="#menu7"><p style = "padding-right: 15px;">Subject</p></a></li>
   </ul>
   <div class="container tab-content mr-lg-4">
     <div id="home" class="tab-pane fade in active">
