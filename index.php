@@ -1,3 +1,24 @@
+<?php
+		$DBHost = "acadmysql.duc.auburn.edu";
+		$DBUser = "mts0040";
+		$DBPass = "0040";
+		$DBName = "mts0040db";
+		$conn = mysqli_connect($DBHost, $DBUser, $DBPass, $DBName);
+		
+		if (mysqli_connect_errno()) {
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			die;
+		}
+		else {
+?>
+		<!--	<div class="alert alert-success alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong><center>Connection to database was successful!</center></strong> 
+			</div>-->
+<?php
+		}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,10 +31,27 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-		
+<!--May or may not do navigation bar: Add Example tab/page
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Active</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Disabled</a>
+    </li>
+  </ul>
+</nav>
+-->
+<!--Input query and display result-->
 <div class="container-fluid">
-<h1><center>Welcome to our Online Bookstore</h1>
+<h1><center>Online Bookstore</h1>
 	<form method="post">
 			<div class="form-group">
 				<label for="input">Input Query:</label>
@@ -22,19 +60,47 @@
 		<button type="submit" class="btn btn-primary" name = "submit">Submit</button>
 	</form>
     <?php 
+        //Get input from html text area
         $sql = $_POST["input"];
+        echo $first_connect;
         $sql = stripslashes($sql);
-        echo $sql;
+        $check_drop = strtoLower($sql);
+        $drop = "drop";
+        //Check for drop statement
+        if (strpos($check_drop, $drop) !== false) { ?>
+            <div class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong><center>Drop statement is not allowed!</center></strong> 
+			</div>
+        <?php 
+        }
+        //Check if empty
+        elseif(empty($sql) and isset($_POST["submit"]) ) {     ?>
+            <div class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong><center>Empty sql statement is not allowed!</center></strong> 
+			</div>
+        <?php   
+        }
+        else {
        // echo $sql;
         //$sql = "Select Title From Book Where Author='author1'";
         //$sql = mysqli_real_escape_string($conn, $sql);
     //echo $sql;
         $result = $conn->query($sql);
+        if (mysqli_error($conn)) { ?>
+            <div class="alert alert-danger alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong><center><?php echo mysqli_error($conn)?></center></strong> 
+			</div>
+        <?php
+        }
+        else {
         $count = mysqli_num_rows($result);
+        $hi = 1;
         $finfo = mysqli_fetch_fields($result);
-        echo $sql;
     ?>
-    <table  class = "table table-hover table-bordered">
+    <table  class = "table table-hover table-bordered table-striped">
 	       <thead>
 		      <tr>
                   <?php 
@@ -48,27 +114,30 @@
                   ?>
 		      </tr>
 	       </thead>
-	       <?php	
-            while ($row = mysqli_fetch_row($result)) {
-            ?> 
+	       <?php while ($row = mysqli_fetch_row($result)) { ?> 
             <tr>  
-                <?php 
-                  for ($i = 0; $i < $field_count; $i++) { 
-                ?>
+                <?php for ($i = 0; $i < $field_count; $i++) { ?>
                 <td><?php echo $row[$i];?></td>
-                <?php
-                  }
-                ?>
+                <?php } ?>
             </tr>
-            <?php 
-            }
-            ?>
+            <?php } ?>
     </table>
+ 
+    <?php
+            if (isset($count)) {
+     ?>
+            <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><center><?php echo "Number of rows displayed: ", $count?></center></strong> 
+    <?php
+            }
+      }
+    }
+    ?>
 </div>
     
 <div class="container">
-  <h2>Dynamic Tabs</h2>
-  <p>Bookstore Tables</p>
+  <h2>Bookstore Tables</h2>
 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Book                                               .</a></li>
@@ -80,10 +149,10 @@
     <li><a data-toggle="tab" href="#menu6">Supplier                                                 .</a></li>
     <li><a data-toggle="tab" href="#menu7">Subject                                                  .</a></li>
   </ul>
-  <div class="tab-content mr-lg-4">
-    <div id="home" class="tab-pane fade in active" style="width: 200px;">
+  <div class="container tab-content mr-lg-4">
+    <div id="home" class="tab-pane fade in active">
       <h3>Book</h3>
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">BookID</th>
@@ -115,10 +184,10 @@
             <?php } ?>
         </table>
   </div>
-    <div id="menu1" class="tab-pane fade" style="width: 200px;">
+    <div id="menu1" class="tab-pane fade">
       <h3>Customer</h3>
        <div class="table-responsive-lg">
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">CustomerID</th>
@@ -145,9 +214,9 @@
         </table>
       </div>
     </div>
-    <div id="menu2" class="tab-pane fade" style="width: 200px;">
+    <div id="menu2" class="tab-pane fade">
       <h3>Employee</h3>
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">EmployeeID</th>
@@ -172,9 +241,9 @@
         </table>
     </div>
     <!--<div class = "table-responsive-lg">-->
-    <div id="menu3" class="tab-pane fade" style="width: 200px;">
+    <div id="menu3" class="tab-pane fade">
       <h3>Order</h3>
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">OrderID</th>
@@ -204,9 +273,9 @@
             <?php } ?>
         </table>
     </div>
-    <div id="menu4" class="tab-pane fade" style="width: 200px;">
+    <div id="menu4" class="tab-pane fade">
       <h3>OrderDetail</h3>
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">BookID</th>
@@ -230,9 +299,9 @@
             <?php } ?>
         </table>
       </div>
-    <div id="menu5" class="tab-pane fade" style="width: 200px;">
+    <div id="menu5" class="tab-pane fade">
       <h3>Shipper</h3>
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">ShipperID</th>
@@ -254,9 +323,9 @@
             <?php } ?>
         </table>
     </div>
-    <div id="menu6" class="tab-pane fade" style="width: 200px;">
+    <div id="menu6" class="tab-pane fade" >
       <h3>Supplier</h3>
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">SupplierID</th>
@@ -284,9 +353,9 @@
             <?php } ?>
         </table>
     </div>
-    <div id="menu7" class="tab-pane fade" style="width: 200px;">
+    <div id="menu7" class="tab-pane fade">
       <h3>Subject</h3>
-        <table  class = "table table-hover table-bordered">
+        <table  class = "table table-hover table-striped table-bordered">
 	       <thead>
 		      <tr>
 			      <th scope="col">SubjectID</th>
@@ -311,33 +380,6 @@
    </div>
 </div>
     
-<!--<table class = "table">
-	<thead>
-		<tr>
-			<th scope="col">OrderDetail</th>
-		</tr>
-	</thead>
--->
-<!--<table  class = "table">
-	<thead>
-		<tr>
-			<th scope="col">BookID</th>
-		</tr>
-	</thead>
-	<?php	
-		//$sql = "SELECT BookID FROM Book";
-		//$result = $conn->query($sql);
-		//$count = mysql_num_rows($result);
-        //while ($row = mysqli_fetch_row($result))
-		//echo $row[0];
-       // while ($row = mysqli_fetch_assoc($result)) {
-    ?>  <tr>  
-        <td><?php //echo $row["BookID"];?></td>
-        </tr>
-    <?php
-        //}
-	?>
-</table>-->
 
 </body>
 </html>
