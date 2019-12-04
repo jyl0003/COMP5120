@@ -9,7 +9,7 @@
 9. select Title, SupplierID from Book where BookID in (select BookID from OrderDetail where OrderID in (select OrderID from Orders where (ShippedDate = '2016-08-04'))); 
 10. select Distinct b.Title From Book b, Orders o, OrderDetail od, Customer c where c.CustomerID=o.CustomerID AND od.OrderID=o.OrderID AND od.BookID=b.BookID AND (c.LastName='lastName1' OR c.LastName='lastName4') Order By b.Title;
 11. select Title from Book where BookID in (select BookID from OrderDetail where OrderID in (select OrderID from Orders where EmployeeID in (select EmployeeID from Employee where LastName = 'lastname6' and FirstName = 'firstname6')));
-12. Select b.Title, SUM(od.Quantity) From Book b, OrderDetail od where od.BookID=b.BookID Group By b.Title;
+12.Select b.Title, SUM(od.Quantity) as Total From Book b, OrderDetail od where od.BookID=b.BookID Group By b.Title Order BY Total ASC;
 13. select c.LastName, c.FirstName from Customer c, Orders o, OrderDetail od where c.CustomerID = o.CustomerID AND o.OrderID=od.OrderID Group By c.LastName Having SUM(od.Quantity) > 2;
 14. Select Distinct c.LastName, c.FirstName, b.Title From Customer c join Orders o On o.CustomerID=c.CustomerID join OrderDetail od ON od.OrderID=o.OrderID join Book b ON b.BookID=od.BookID join Subject s ON s.SubjectID = b.SubjectID where b.SubjectID = 3 OR b.SubjectID = 4;
 15. Select c.LastName, c.FirstName FROM Customer c, Orders o, OrderDetail od, Book b where c.CustomerID=o.CustomerID AND od.OrderID=o.OrderID AND b.BookID=od.BookID AND b.Author='author1' Group By c.LastName;
