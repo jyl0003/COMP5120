@@ -70,7 +70,6 @@
     <?php 
         //Get input from html text area
         $sql = $_POST["input"];
-        echo $first_connect;
         $sql = stripslashes($sql);
         $check_drop = strtoLower($sql);
         $drop = "drop";
@@ -78,7 +77,7 @@
         if (strpos($check_drop, $drop) !== false) { ?>
             <div class="alert alert-danger alert-dismissible">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong><center>Drop statement is not allowed!</center></strong> 
+			<strong><center>DROP statement is not allowed!</center></strong> 
 			</div>
         <?php 
         }
@@ -105,7 +104,6 @@
         }
         else {
         $count = mysqli_num_rows($result);
-        $hi = 1;
         $finfo = mysqli_fetch_fields($result);
     ?>
     <table  class = "table table-hover table-bordered table-striped">
@@ -201,7 +199,7 @@
 			      <th scope="col">CustomerID</th>
                   <th scope="col">Last Name</th>
                   <th scope="col">First Name</th>
-                  <th scope="col" class="col-sm-5">Phone #</th>
+                  <th scope="col">Phone #</th>
 		      </tr>
 	       </thead>
 	       <?php	
