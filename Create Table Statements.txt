@@ -1,0 +1,30 @@
+--- Create Table Statements --- 
+
+Book:
+ CREATE TABLE Book (BookID INT NOT NULL, Title VARCHAR(15), UnitPrice FLOAT, 
+	Author VARCHAR(15), Quantity INT, SupplierID INT(11), SubjectID(11), 
+	PRIMARY KEY(BookID), Foreign key(SupplierID) references Supplier(SupplierID), foreign key(SubjectID) references Subject(SubjectID)); 
+
+Customer:
+create table Customer (CustomerID int NOT NULL, LastName varchar(15), FirstName varchar(15), Phone varchar(15), primary key(CustomerID));
+
+Employee:
+create Table Employee (EmployeeID int NOT NULL, LastName varchar(15), FirstName varchar(15), primary key(EmployeeID);
+
+Orders:
+create table Orders (OrderID int NOT NULL, CustomerID int NOT NULL, EmployeeID int NOT NULL, OrderDate Date, ShippedDate Date, ShipperID int, 
+	primary key(OrderID), foreign key(CustomerID) references Customer(CustomerID), foreign key(EmployeeID) references Employee(EmployeeID) );
+
+OrderDetails:
+create table OrderDetail(BookID int NOT NULL, OrderID int NOT NULL, Quantity int,  
+	foreign key(BookID) references Book(BookID),  foreign key(OrderID) references Orders(OrderID));
+
+Shipper:
+create table Shipper (ShipperID int NOT NULL, ShipperName varchar(15), primary key(ShipperID));
+
+Subject:
+create table Subject (SubjectID int NOT NULL, CategoryName varchar(15), primary key(SubjectID));
+
+Supplier:
+create Table Supplier (SupplierID int NOT NULL, CompanyName varchar(15), ContactLastName varchar(15), ContactFirstName varchar(15), Phone varchar(15)
+			primary key(SupplierID));
