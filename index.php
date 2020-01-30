@@ -1,7 +1,7 @@
 <?php
 		$DBHost = "acadmysql.duc.auburn.edu";
-		$DBUser = "mts0040";
-		$DBPass = "0040";
+		$DBUser = "//";
+		$DBPass = "//";
 		$DBName = "mts0040db";
 		$conn = mysqli_connect($DBHost, $DBUser, $DBPass, $DBName);
 		
